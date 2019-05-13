@@ -5,7 +5,7 @@ import {
   mapObjectTextItem,
   loadPairStringToObject
 } from './load';
-import mockData from '../test-data/data.json';
+import mockData from '../test-data/data-q1.json';
 
 describe('load function', () => {
   it('should return exactly mockData\'s length' , () => {

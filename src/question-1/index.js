@@ -1,4 +1,4 @@
-import dataInput from '../test-data/data.json';
+import dataInput from '../test-data/data-q1.json';
 import { store } from './store';
 import { load } from './load';
 

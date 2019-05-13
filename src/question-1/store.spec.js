@@ -5,7 +5,7 @@ import {
   getDataItemString,
   flattenObjectToString
 } from './store';
-import mockData from '../test-data/data.json';
+import mockData from '../test-data/data-q1.json';
 
 describe('store function', () => {
   it('should return exactly mockData\'s length' , () => {
