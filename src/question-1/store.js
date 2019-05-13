@@ -25,4 +25,4 @@ function flattenObjectToString(data, acc, prop, index) {
   return acc;
 }
 
-module.exports = store;
+export default store;

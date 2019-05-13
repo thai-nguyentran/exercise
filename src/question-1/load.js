@@ -16,4 +16,4 @@ function load(text) {
   });
 }
 
-module.exports = load;
+export default load;

@@ -1,6 +1,6 @@
-const dataInput = require('../test-data/data.json');
-const store = require('./store');
-const load = require('./load');
+import dataInput from '../test-data/data.json';
+import store from './store';
+import load from './load';
 
 function main() {
   const oldTimeStoreFunc = new Date();
