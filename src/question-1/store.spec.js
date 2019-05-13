@@ -25,7 +25,6 @@ describe('getDataItemString function', () => {
     const acc = [];
     const result = getDataItemString(acc, data);
     expect(result).to.equal('a0=asdasdasdas;b0=sadqwuiyweuifs;c0=adqwhkdhk\n');
-    console.log(result);
   });
 });
 

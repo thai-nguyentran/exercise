@@ -1,6 +1,6 @@
 import dataInput from '../test-data/data.json';
 import { store } from './store';
-import load from './load';
+import { load } from './load';
 
 function main() {
   const oldTimeStoreFunc = new Date();
