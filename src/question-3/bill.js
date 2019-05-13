@@ -34,7 +34,8 @@ class Bill {
       case this.user.isCustomer:
         if (!this.user.joinDate) {
           if (newestTotalDiscountablePayment > 100) {
-            return newestTotalDiscountablePayment - ((newestTotalDiscountablePayment / 100) * 5);
+            return newestTotalDiscountablePayment
+                    - (Math.round(newestTotalDiscountablePayment / 100) * 5);
           }
 
           return newestTotalDiscountablePayment;
@@ -54,7 +55,8 @@ class Bill {
         }
 
         if (newestTotalDiscountablePayment > 100) {
-          return newestTotalDiscountablePayment - ((newestTotalDiscountablePayment / 100) * 5);
+          return newestTotalDiscountablePayment
+                  - (Math.round(newestTotalDiscountablePayment / 100) * 5);
         }
 
         return newestTotalDiscountablePayment;
