@@ -1,0 +1,60 @@
+{
+  "id": "bill0",
+  "user": {
+    "id": "user0",
+    "isEmployee": true,
+    "isAffiliate": false,
+    "isCustomer": false,
+    "joinDate": "1-1-2017"
+  },
+  "products": [
+    {
+      "id": "product0",
+      "name": "Product 0",
+      "isGrocery": false,
+      "price": 40
+    },
+    {
+      "id": "product1",
+      "name": "Product 1",
+      "isGrocery": true,
+      "price": 50
+    },
+    {
+      "id": "product2",
+      "name": "Product 2",
+      "isGrocery": false,
+      "price": 50
+    },
+    {
+      "id": "product3",
+      "name": "Product 3",
+      "isGrocery": false,
+      "price": 160
+    },
+    {
+      "id": "product4",
+      "name": "Product 4",
+      "isGrocery": false,
+      "price": 453
+    },
+    {
+      "id": "product5",
+      "name": "Product 5",
+      "isGrocery": false,
+      "price": 430
+    },
+    {
+      "id": "product6",
+      "name": "Product 6",
+      "isGrocery": false,
+      "price": 232
+    },
+    {
+      "id": "product7",
+      "name": "Product 7",
+      "isGrocery": true,
+      "price": 232
+    }
+  ]
+}
