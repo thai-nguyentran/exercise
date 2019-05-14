@@ -1,31 +1,63 @@
 export function load(text) {
-  if (!text) return [];
+  if (!text) return;
 
-  const itemTextArr = text.split('\n');
+  let result = [];
+  let currentObj = {};
+  let key = '';
+  let value = '';
+  let isUpdatingKey = true, isUpdatingValue = false;
+  let textLength = text.length;
 
-  return itemTextArr
-    .filter(textItem => !!textItem)
-    .map(mapObjectTextItem.bind(this));
-}
+  for (let i = 0; i < textLength; ++i) {
+    const character = text[i];
 
-export function mapObjectTextItem(textItem) {
-  const objectItemText = textItem.split(';');
+    switch (character) {
+      case '=':
+        if (key) {
+          isUpdatingKey = false;
+          isUpdatingValue = true;
+        }
+        break;
+      case ';':
+        if (key) {
+          currentObj[key] = value;
+          key = '';
+          value = '';
+          isUpdatingKey = true;
+          isUpdatingValue = false;
+        }
+        break;
+      case '\n':
+        if (key) {
+          currentObj[key] = value;
+          result.push(currentObj);
+          currentObj = {};
+          key = '';
+          value = '';
+          isUpdatingKey = true;
+          isUpdatingValue = false;
+        }
+        break;
+      default:
+        if (isUpdatingKey) {
+          key += character;
+        } else if (isUpdatingValue) {
+          value += character;
+        }
 
-  return objectItemText
-    .filter(pairString => pairString)
-    .reduce(loadPairStringToObject.bind(this), {});
-};
+        if (i === textLength - 1) {
+          currentObj[key] = value;
+          result.push(currentObj);
+          currentObj = {};
+          key = '';
+          value = '';
+          isUpdatingKey = true;
+          isUpdatingValue = false;
+        }
 
-export function loadPairStringToObject(assigningObject, pairString) {
-  if (!pairString) return {};
-
-  const pair = pairString.split('=');
-
-  if (pair[1].includes('\n')) {
-    pair[1] = pair[1].split('\n')[0];
+        break;
+    }
   }
 
-  assigningObject[pair[0]] = pair[1];
-
-  return assigningObject;
+  return result;
 }
