@@ -1,68 +1,64 @@
-import Product from './product';
+import GroceryProduct from './grocery-product';
+import NonGroceryProduct from './non-grocery-product';
+import User from './user';
+import EmployeeUser from './employee-user';
+import AffiliateUser from './affiliate-user';
+import CustomerUser from './customer-user';
 
 class Bill {
   constructor(data = {}) {
     this.id = data.id; // billId
-    this.user = data.user || null;
     this.products = data.products || [];
+
+    if (data.user) {
+      switch (true) {
+        case data.user.isEmployee:
+          this.user = new EmployeeUser(data.user);
+          break;
+        case data.user.isAffiliate:
+          this.user = new AffiliateUser(data.user);
+          break;
+        case data.user.isCustomer:
+          this.user = new CustomerUser(data.user);
+          break;
+        default:
+          this.user = new User();
+      }
+    } else {
+      this.user = new User();
+    }
   }
 
-  get totalDiscountablePayment() {
+  calculateTotalDiscountablePayment() {
     return this.products.reduce((acc, item) => {
-      const product = new Product(item);
+      let product;
 
-      if (!product.isGrocery) {
-        acc += product.price;
+      if (item.isGrocery) {
+        product = new GroceryProduct(item);
+      } else {
+        product = new NonGroceryProduct(item);
       }
+
+      acc += product.discountablePrice;
 
       return acc;
     }, 0)
   }
 
+  calculateDiscountValue() {
+    const totalDiscountablePayment = this.calculateTotalDiscountablePayment();
+    const discountByUserTypeValue = totalDiscountablePayment * this.user.discountPercentage;
+    const tempRemainingPaymentValue = totalDiscountablePayment - discountByUserTypeValue;
+
+    if (tempRemainingPaymentValue > 100) {
+      return discountByUserTypeValue + (Math.floor(discountByUserTypeValue / 100) * 5);
+    }
+
+    return discountByUserTypeValue;
+  }
+
   calculateNetPaymentValue() {
-    const newestTotalDiscountablePayment = this.totalDiscountablePayment;
-
-    if (!this.user) {
-      return newestTotalDiscountablePayment;
-    }
-
-    switch (true) {
-      case this.user.isEmployee:
-        return newestTotalDiscountablePayment * 0.7;
-      case this.user.isAffiliate:
-        return newestTotalDiscountablePayment * 0.9;
-      case this.user.isCustomer:
-        if (!this.user.joinDate) {
-          if (newestTotalDiscountablePayment > 100) {
-            return newestTotalDiscountablePayment
-                    - (Math.round(newestTotalDiscountablePayment / 100) * 5);
-          }
-
-          return newestTotalDiscountablePayment;
-        }
-
-        const today = new Date();
-        const joinDate = new Date(this.user.joinDate);
-        const yearDiff = today.getFullYear() - joinDate.getFullYear();
-        const monthDiff = today.getMonth() - joinDate.getMonth();
-        const dayDiff = today.getDate() - joinDate.getDate();
-
-        if (yearDiff > 2
-            || (yearDiff === 2
-                && (monthDiff > 0
-                    || (monthDiff === 0 && dayDiff > 0)))) {
-          return newestTotalDiscountablePayment * 0.95;
-        }
-
-        if (newestTotalDiscountablePayment > 100) {
-          return newestTotalDiscountablePayment
-                  - (Math.round(newestTotalDiscountablePayment / 100) * 5);
-        }
-
-        return newestTotalDiscountablePayment;
-      default:
-        return newestTotalDiscountablePayment;
-    }
+    return this.calculateTotalDiscountablePayment() - this.calculateDiscountValue();
   }
 }
 

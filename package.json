@@ -6,7 +6,7 @@
   "scripts": {
     "start:q1": "babel-node src/question-1",
     "start:q3": "babel-node src/question-3",
-    "test": "jest --watch"
+    "test": "jest --watch src/question-3"
   },
   "author": "",
   "license": "ISC",

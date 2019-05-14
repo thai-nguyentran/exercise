@@ -1,16 +1,16 @@
 import { expect } from 'chai';
 
-import User from './user';
+import AffiliateUser from './affiliate-user';
 
-describe('User class', () => {
+describe('AffiliateUser class', () => {
   it('should return blank default user object', () => {
-    const user = new User();
+    const user = new AffiliateUser();
     expect(user).to.deep.equal({
       id: null,
       isEmployee: false,
-      isAffiliate: false,
+      isAffiliate: true,
       isCustomer: false,
       joinDate: undefined
-    })
+    });
   });
 });

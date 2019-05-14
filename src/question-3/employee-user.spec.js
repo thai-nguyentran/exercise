@@ -1,16 +1,16 @@
 import { expect } from 'chai';
 
-import User from './user';
+import EmployeeUser from './employee-user';
 
-describe('User class', () => {
+describe('EmployeeUser class', () => {
   it('should return blank default user object', () => {
-    const user = new User();
+    const user = new EmployeeUser();
     expect(user).to.deep.equal({
       id: null,
-      isEmployee: false,
+      isEmployee: true,
       isAffiliate: false,
       isCustomer: false,
       joinDate: undefined
-    })
+    });
   });
 });

@@ -5,6 +5,10 @@ class Product {
     this.isGrocery = data.isGrocery || false; // it's should be category info here, but it's un-use in this case
     this.price = data.price || 0;
   }
+
+  get discountablePrice() {
+    return this.price;
+  }
 }
 
 export default Product;

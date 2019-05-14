@@ -6,24 +6,36 @@ import mockData from '../test-data/data-q3';
 describe('Bill class', () => {
   it('should return blank default bill object', () => {
     const bill = new Bill();
-    expect(bill).to.deep.equal({
+    const exppectedData = {
       id: undefined,
-      user: null,
-      products: []
-    });
+      products: [],
+      user: {
+        id: null,
+        isEmployee: false,
+        isAffiliate: false,
+        isCustomer: false,
+        joinDate: undefined
+      }
+    }
+    expect(bill).to.deep.equal(exppectedData);
   });
 
   it('should return totalDiscountablePayment', () => {
     const billDetails = new Bill(mockData);
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     expect(totalDiscountablePayment).to.equal(1365);
+  });
+
+  it('should return totalDiscountValue', () => {
+    const billDetails = new Bill(mockData);
+    const totalDiscountValue = billDetails.calculateDiscountValue();
+    expect(totalDiscountValue).to.equal(429.5);
   });
 
   it('should return netPaymentValue has been discount 30% in case of user is employee', () => {
     const billDetails = new Bill(mockData);
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
     const netPaymentValue = billDetails.calculateNetPaymentValue();
-    expect(netPaymentValue).to.equal(totalDiscountablePayment * 0.7);
+    expect(netPaymentValue).to.equal(935.5);
   })
 
   it('should return netPaymentValue in case of missing user info', () => {
@@ -31,7 +43,7 @@ describe('Bill class', () => {
       ...mockData,
       user: null
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
     expect(netPaymentValue).to.equal(totalDiscountablePayment);
   })
@@ -46,9 +58,8 @@ describe('Bill class', () => {
         isCustomer: false
       }
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
     const netPaymentValue = billDetails.calculateNetPaymentValue();
-    expect(netPaymentValue).to.equal(totalDiscountablePayment * 0.9);
+    expect(netPaymentValue).to.equal(1223.5);
   })
 
   it('should return netPaymentValue has been discount 5% in case of user is customer and has joined before 2 years', () => {
@@ -62,27 +73,25 @@ describe('Bill class', () => {
         joinDate: '1-1-2017'
       }
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
     expect(netPaymentValue).to.equal(totalDiscountablePayment * 0.95);
   })
 
-  it('should return netPaymentValue has been discount 5$ per 100$ in case of user is customer and has joined no more than 2 years', () => {
+  it('should return netPaymentValue has been discount 5$ per 100$ in case of user has joined less than 2 years', () => {
     const billDetails = new Bill({
       ...mockData,
       user: {
         ...mockData.user,
         isEmployee: false,
         isAffiliate: false,
-        isCustomer: true,
+        isCustomer: false,
         joinDate: '1-1-2018'
       }
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
-    const expectedValue = totalDiscountablePayment
-                          - (Math.round(totalDiscountablePayment / 100) * 5);
-    expect(netPaymentValue).to.equal(expectedValue);
+    expect(netPaymentValue).to.equal(1365);
   })
 
   it('should return netPaymentValue in case of user is customer with not specific joinDate', () => {
@@ -96,11 +105,9 @@ describe('Bill class', () => {
         joinDate: undefined
       }
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
-    const expectedValue = totalDiscountablePayment
-                          - (Math.round(totalDiscountablePayment / 100) * 5);
-    expect(netPaymentValue).to.equal(expectedValue);
+    expect(netPaymentValue).to.equal(1365);
   })
 
   it('should return netPaymentValue in case of user is customer with not specific joinDate and totalPaymentValue less than 100', () => {
@@ -122,7 +129,7 @@ describe('Bill class', () => {
         }
       ]
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
     expect(netPaymentValue).to.equal(totalDiscountablePayment);
   })
@@ -146,7 +153,7 @@ describe('Bill class', () => {
         }
       ]
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
     expect(netPaymentValue).to.equal(totalDiscountablePayment);
   })
@@ -161,7 +168,7 @@ describe('Bill class', () => {
         isCustomer: false
       }
     });
-    const totalDiscountablePayment = billDetails.totalDiscountablePayment;
+    const totalDiscountablePayment = billDetails.calculateTotalDiscountablePayment();
     const netPaymentValue = billDetails.calculateNetPaymentValue();
     expect(netPaymentValue).to.equal(totalDiscountablePayment);
   })

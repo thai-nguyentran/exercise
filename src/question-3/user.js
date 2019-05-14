@@ -1,5 +1,3 @@
-import Bill from './bill';
-
 class User {
   constructor(data = {}) {
     this.id = data.id || null;
@@ -7,6 +5,10 @@ class User {
     this.isAffiliate = data.isAffiliate || false;
     this.isCustomer = data.isCustomer || false;
     this.joinDate = data.joinDate;
+  }
+
+  get discountPercentage() {
+    return 0;
   }
 }
 
