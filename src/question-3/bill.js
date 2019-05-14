@@ -51,7 +51,7 @@ class Bill {
     const tempRemainingPaymentValue = totalDiscountablePayment - discountByUserTypeValue;
 
     if (tempRemainingPaymentValue > 100) {
-      return discountByUserTypeValue + (Math.floor(discountByUserTypeValue / 100) * 5);
+      return discountByUserTypeValue + (Math.floor(tempRemainingPaymentValue / 100) * 5);
     }
 
     return discountByUserTypeValue;
