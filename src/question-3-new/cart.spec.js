@@ -47,5 +47,14 @@ describe('Cart class', () => {
     const cart = new Cart(mockData);
     const totalDiscountAmountByProductCategory = cart.calculateTotalDiscountAmountByProductCategory();
     expect(totalDiscountAmountByProductCategory).to.equal(60);
+  });
+
+  it('calculateTotalDiscountAmountByProductCategory function: should return totalDiscountAmountByProductCategory in case of totalProductsPrice is less than 100', () => {
+    const cart = new Cart({
+      ...mockData,
+      items: [mockData.items[0]]
+    });
+    const totalDiscountAmountByProductCategory = cart.calculateTotalDiscountAmountByProductCategory();
+    expect(totalDiscountAmountByProductCategory).to.equal(0);
   })
 });
