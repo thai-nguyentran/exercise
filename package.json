@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:q1": "babel-node src/question-1",
-    "start:q3": "babel-node src/question-3",
+    "start:q3": "babel-node src/question-3-new",
     "test": "jest --watch"
   },
   "author": "",
