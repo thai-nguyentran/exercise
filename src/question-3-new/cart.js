@@ -27,7 +27,7 @@ class Cart {
   calculateTotalDiscountablePriceByProductCategory() {
     return this.items.reduce((acc, item) => {
       const product = new Product(item);
-      acc += product.discountAmountByCategory;
+      acc += product.discountablePriceByPercentageBase;
       return acc;
     }, 0);
   }

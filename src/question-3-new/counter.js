@@ -11,11 +11,13 @@ class Counter {
 
   checkout() {
     const totalDiscountAmount = this.rules.reduce((acc, rule) => {
+      // console.log(rule());
       acc += rule();
       return acc;
     }, 0);
 
-    return this.cart.totalProductsPrice - totalDiscountAmount;
+    const totalProductsPrice = this.cart.calculateTotalProductsPrice();
+    return totalProductsPrice - totalDiscountAmount;
   }
 }
 
