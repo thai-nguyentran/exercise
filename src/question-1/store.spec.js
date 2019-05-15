@@ -13,6 +13,11 @@ describe('store function', () => {
     const lines = text.split('\n');
     expect(lines.length - 1).to.equal(mockData.length);
   });
+
+  it('should return null object' , () => {
+    const text = store();
+    expect(text).to.be.null;
+  });
 });
 
 describe('getDataItemString function', () => {
@@ -34,6 +39,14 @@ describe('flattenObjectToString function', () => {
     b0: 'sadqwuiyweuifs',
     c0: 'adqwhkdhk'
   };
+
+  it('should return blank string', () => {
+    const acc = '';
+    const prop = 'a0';
+    const index = 0;
+    const result = flattenObjectToString(null, acc, prop, index);
+    expect(result).to.equal('');
+  });
 
   it('should return the first key=value pairing in data', () => {
     const acc = '';
