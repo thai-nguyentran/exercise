@@ -21,6 +21,14 @@ describe('load function', () => {
     expect(data).to.deep.equal(expectedData);
   });
 
+  it('should return blank array' , () => {
+    const text = null;
+    const data = load(text);
+
+    expect(data.length).to.not.be.null;
+    expect(data.length).to.equal(0);
+  });
+
   it('should return exactly mockData with wrong starting characters (includes \'=\', \';\', \'\\n\')' , () => {
     const text = `=======;;;;;;;\n\n\na0=asdasdasdas;b0=sadqwuiyweuifs;c0=adqwhkdhk\na1=asdasdasdas;b1=sadqwuiyweuifs;c1=adqwhkdhk\na2=asdasdasdas;b2=sadqwuiyweuifs;c2=adqwhkdhk\n`;
     const data = load(text);

@@ -1,5 +1,5 @@
 export function load(text) {
-  if (!text) return;
+  if (!text) return [];
 
   let result = [];
   let currentObj = {};
