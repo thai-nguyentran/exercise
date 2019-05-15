@@ -8,5 +8,5 @@ Run question 3's execute function.<br>
 Launches the test runner in the interactive watch mode.<br>
 
 ### `Complexity`
-Q1: store() function: O(n^2)<br>
+Q1: store() function: O(n * m)<br>
 load() function: O(n)
