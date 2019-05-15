@@ -1,13 +1,12 @@
 {
-  "id": "bill0",
-  "user": {
-    "id": "user0",
+  "customer": {
+    "id": "customer0",
+    "name": "Customer 0",
     "isEmployee": true,
     "isAffiliate": false,
-    "isCustomer": false,
-    "joinDate": "1-1-2017"
+    "yearOfLoyalty": 2
   },
-  "products": [
+  "items": [
     {
       "id": "product0",
       "name": "Product 0",

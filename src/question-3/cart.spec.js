@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import Cart from './cart';
 import Customer from './customer';
-import mockData from '../test-data/data-q3-new';
+import mockData from '../test-data/data-q3';
 
 describe('Cart class', () => {
   it('should return blank default Cart object', () => {
